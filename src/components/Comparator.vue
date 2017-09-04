@@ -7,11 +7,11 @@
       <span v-for="label in comparisonData.labels" :key="label"> {{label}} </span>
     </div>
     <div class="values-container" v-for="index in 5" :key="index">
-      <div v-if="comparisonData.items[index]" @click="removeItem(index)" >
+      <div v-if="comparisonData.items[index - 1]" @click="removeItem(index)" >
         <header class="column-title">
-          <span>{{ comparisonData.items[index].title }}</span>
+          <span>{{ comparisonData.items[index - 1].title }}</span>
         </header>
-        <span v-for="value in comparisonData.items[index].values" :key="value" > {{value}} </span>
+        <span v-for="value in comparisonData.items[index - 1].values" :key="value" > {{value}} </span>
       </div>
       <div v-else class="add-item-placeholder" @click="addItem">
         <span>Add Item</span>

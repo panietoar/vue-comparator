@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Hello from '@/components/Hello'
+import Comparator from '@/components/Comparator'
 
 describe('Comparator.vue', () => {
     it('should render correct contents', () => {

@@ -1,23 +1,36 @@
 <template>
   <div class="comparator-container">
     <div class="labels-container">
-      <header class="label-title">
+      <header class="column-title">
         <span>{{featuresLabel}}</span>
       </header>
-      <p v-for="label in comparisonData.labels"> {{label}} </p>
+      <span v-for="label in comparisonData.labels" :key="label"> {{label}} </span>
     </div>
-    <div class="values-container" v-for="item in comparisonData.items" :key="item.title">
-      <header class="item-title">
-        <span>{{ item.title }}</span>
-      </header>
-      <p v-for="value in item.values"> {{value}} </p>
+    <div class="values-container" v-for="index in 5" :key="index">
+      <div v-if="comparisonData.items[index]" @click="removeItem(index)" >
+        <header class="column-title">
+          <span>{{ comparisonData.items[index].title }}</span>
+        </header>
+        <span v-for="value in comparisonData.items[index].values" :key="value" > {{value}} </span>
+      </div>
+      <div v-else class="add-item-placeholder" @click="addItem">
+        <span>Add Item</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['comparisonData', 'featuresLabel']
+  props: ['comparisonData', 'featuresLabel'],
+  methods: {
+    removeItem (index) {
+      this.$emit('itemRemoved', index)
+    },
+    addItem () {
+      this.$emit('itemAdded')
+    }
+  }
 }
 </script>
 
@@ -26,34 +39,46 @@ export default {
   text-align: left;
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  flex-direction: row;
   align-content: flex-end;
   margin: 2em 1em;
 
+  .labels-container,
+  .values-container {
+    width: 16.67%;
+    display: flex;
+    flex-direction: column;
+
+    .column-title {
+      margin-bottom: 1.5em;
+      font-weight: bold;
+    }
+
+    span {
+      margin-bottom: 0.3em;
+      display: block;
+      padding: 10px 5px;
+    }
+
+  }
+
   .labels-container {
     font-weight: bold;
-
-    .label-title {
-      margin-bottom: 1.5em;
-
-      span {
-        font-weight: bold;
-        margin-bottom: 0.3em;
-      }
-    }
   }
 
   .values-container {
     text-align: center;
+    cursor: pointer;
+    border-radius: 3px;
+  }
 
-    .item-title {
-      margin-bottom: 1.5em;
+  .add-item-placeholder {
+    background-color: #ddd;
 
-      span {
-        font-weight: bold;
-        margin-bottom: 0.3em;
-      }
+    span {
+      margin: 50% 0;
     }
   }
+
 }
 </style>
